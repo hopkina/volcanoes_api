@@ -1,2 +1,2 @@
 # volcanoes_api
-REST API for volcanoes
+Flask REST API for volcanoes
