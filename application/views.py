@@ -1,12 +1,10 @@
-from application import app
-
-from flask import render_template, jsonify, redirect, url_for, request, Markup
-import geoalchemy2, shapely
-from shapely import geometry
+from flask import render_template, jsonify, redirect, request
 from geoalchemy2.shape import to_shape
+from shapely import geometry
 
-from .forms import *	
+from .forms import *
 from .models import *
+
 
 # A redirecting URL that pushes to the volcanoes URL
 @app.route('/', methods=['GET'])
@@ -78,12 +76,12 @@ def volcano_intersect(volcano_id):
 				{'type': 'Feature',
 				 'properties': {'name': country.name, 'id': country.id},
 				 'geometry': {'type': 'MultiPolygon', 
-			 			  	  'coordinates': [shapely.geometry.geo.mapping(to_shape(country.geom))]},
+			 			  	  'coordinates': [geometry.geo.mapping(to_shape(country.geom))]},
 				},
 				{'type': 'Feature',
 				 'properties': {'name': continent.name, 'id': continent.id},
 				 'geometry': {'type': 'MultiPolygon',
-				 			  'coordinates': [shapely.geometry.geo.mapping(to_shape(country.geom))]}
+				 			  'coordinates': [geometry.geo.mapping(to_shape(country.geom))]}
 				}]
 
 		return jsonify({'type': 'FeatureCollection', 'features': data})
@@ -95,7 +93,7 @@ def volcano_intersect(volcano_id):
 @app.route('/volcano/api/v0.1/country', methods=['GET'])
 def get_countries():
 	countries = session.query(Country).all()
-	geoms = {country.id:shapely.geometry.geo.mapping(to_shape(country.geom)) for country in countries}
+	geoms = {country.id:geometry.geo.mapping(to_shape(country.geom)) for country in countries}
 
 	data = [{"type": "Feature",	
 			 "properties":{"name":country.name, "continent":country.continent.name}, 
@@ -133,7 +131,7 @@ def get_country_volcanoes(country_id):
 
 @app.route('/volcano/api/v0.1/continent', methods=['GET'])
 def get_continents():
-	smapping = shapely.geometry.geo.mapping
+	smapping = geometry.geo.mapping
 	continents = session.query(Continent).all()
 
 	data = [{'type': 'Feature', 
