@@ -33,7 +33,7 @@ class Country(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     continent_id = Column(Integer, ForeignKey('continent.id'))
-    continent_ref = relationship("Continent",backref='country')
+    continent_ref = relationship("Continent", backref='country')
     geom = Column(Geometry(geometry_type='MULTIPOLYGON', srid=4326))
 
 
