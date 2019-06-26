@@ -1,10 +1,9 @@
+from geoalchemy2 import Geometry
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
-
-from geoalchemy2 import Geometry
+from sqlalchemy.orm import sessionmaker
 
 from application import app
 
@@ -34,7 +33,7 @@ class Country(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     continent_id = Column(Integer, ForeignKey('continent.id'))
-    continent_ref = relationship("Continent",backref='country')
+    continent_ref = relationship("Continent", backref='country')
     geom = Column(Geometry(geometry_type='MULTIPOLYGON', srid=4326))
 
 

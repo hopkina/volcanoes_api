@@ -3,5 +3,5 @@ from wtforms import SelectField
 
 
 class VolcanoForm(FlaskForm):
-	description  = "Use the dropdown to select a volcano."
-	selections = SelectField('Select a volcano',choices=[])
+    description = "Use the dropdown to select a volcano."
+    selections = SelectField('Select a volcano', choices=[])
